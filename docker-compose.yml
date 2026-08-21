@@ -1,15 +1,17 @@
-version: "3.8"
-
 services:
   proxy:
-    build: .
+    image: ghcr.io/xiaoxinkeji/opencode-free-proxy:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: opencode-proxy
     ports:
-      - "6446:6446"
+      - "${PROXY_PORT:-6446}:6446"
     env_file:
-      - .env
+      - path: .env
+        required: false
+    environment:
+      KEYS_FILE: /app/data/api-keys.json
     volumes:
       - ./data:/app/data
-      - ./api-keys.json:/app/api-keys.json
     restart: unless-stopped
-    network_mode: host

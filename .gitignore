@@ -1,5 +1,9 @@
 node_modules/
 api-keys.json
+data/
+
+dist/
+
 *.log
 .env
 .env.bak

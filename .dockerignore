@@ -1,0 +1,9 @@
+node_modules
+.git
+.github
+.serena
+*.log
+.env
+.env.*
+api-keys.json
+npm-debug.log*

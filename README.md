@@ -160,6 +160,18 @@ sudo systemctl enable --now opencode-proxy
 
 ## Docker 部署
 
+### 使用 GitHub Container Registry（无需本地构建）
+
+每次推送到 `main` 会自动构建并发布多架构镜像；创建 `v1.0.0` 这类标签时，还会创建 GitHub Release 并附带独立可执行文件。
+
+```bash
+docker pull ghcr.io/xiaoxinkeji/opencode-free-proxy:latest
+docker run -d --name opencode-proxy \\
+  -p 6446:6446 \\
+  -v "$PWD/data:/app/data" \\
+  ghcr.io/xiaoxinkeji/opencode-free-proxy:latest
+```
+
 ### 构建镜像
 
 ```bash
@@ -181,13 +193,20 @@ PROXY_PORT=6446
 EOF
 ```
 
-### 启动容器（推荐 host 网络模式）
+### 启动容器
 
 ```bash
-docker run -d --name opencode-proxy --network host \
+docker run -d --name opencode-proxy \
+  -p 6446:6446 \
   --env-file .env \
-  -v $(pwd)/data/api-keys.json:/app/api-keys.json \
+  -v $(pwd)/data:/app/data \
   opencode-free-proxy
+```
+
+也可以直接使用 Compose：
+
+```bash
+docker compose up -d
 ```
 
 ### 任意Key访问
@@ -291,6 +310,23 @@ x-opencode-client: cli
 x-opencode-project: global
 x-opencode-request: msg_<unique_id>
 x-opencode-session: ses_<unique_id>
+```
+
+## Standalone executables
+
+给不想安装 Node.js 的用户，GitHub Actions 会在推送 `v*.*.*` 标签时生成 GitHub Release 附件：
+
+- Linux x64：`opencode-free-proxy-linux-x64`
+- Linux ARM64：`opencode-free-proxy-linux-arm64`
+- macOS x64：`opencode-free-proxy-macos-x64`
+- macOS Apple Silicon：`opencode-free-proxy-macos-arm64`
+- Windows x64：`opencode-free-proxy-win-x64.exe`
+
+下载对应平台文件后直接运行即可。首次运行会在当前目录生成 `api-keys.json`；也可以通过 `KEYS_FILE` 指定密钥文件路径。发布标签示例：
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
 ```
 
 ## License
