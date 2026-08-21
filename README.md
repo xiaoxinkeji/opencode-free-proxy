@@ -9,7 +9,7 @@ One server — works with any tool that speaks OpenAI or Anthropic format: Curso
 ## 30-second setup
 
 ```bash
-git clone https://github.com/sxkiss/opencode-free-proxy.git
+git clone https://github.com/xiaoxinkeji/opencode-free-proxy.git
 cd opencode-free-proxy
 npm install
 node server.mjs
@@ -119,7 +119,7 @@ Add to `~/.config/opencode/opencode.json`:
 
 ```bash
 # On your VPS
-git clone https://github.com/sxkiss/opencode-free-proxy.git
+git clone https://github.com/xiaoxinkeji/opencode-free-proxy.git
 cd opencode-free-proxy
 npm install
 node server.mjs          # foreground
@@ -175,7 +175,7 @@ docker run -d --name opencode-proxy \\
 ### 构建镜像
 
 ```bash
-git clone https://github.com/sxkiss/opencode-free-proxy.git
+git clone https://github.com/xiaoxinkeji/opencode-free-proxy.git
 cd opencode-free-proxy
 docker build -t opencode-free-proxy .
 ```
@@ -332,3 +332,7 @@ git push origin v1.0.0
 ## License
 
 MIT
+
+## Author
+
+**[xiaoxinkeji](https://github.com/xiaoxinkeji)**

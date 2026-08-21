@@ -1,7 +1,8 @@
 {
   "name": "opencode-free-proxy",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "description": "Proxy server for OpenCode free-tier AI models via Zen API",
+  "author": "xiaoxinkeji",
   "type": "module",
   "main": "server.mjs",
   "scripts": {
