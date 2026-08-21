@@ -21,12 +21,14 @@ Done. Server is at `http://localhost:6446`. API keys are in `api-keys.json` (aut
 
 | Model | What it is | Reliability |
 |-------|-----------|-------------|
+| `big-pickle` | OpenCode stealth coding model | Solid |
 | `deepseek-v4-flash-free` | DeepSeek V4 Flash | Solid |
-| `big-pickle` | DeepSeek V4 Flash (alias) | Solid |
+| `x-preview-f-free` | X Preview F (free) | Experimental |
+| `muse-spark-1.2-contributor-free` | Muse Spark 1.2 Contributor (free) | Experimental |
 | `mimo-v2.5-free` | MiMo V2.5 | Hit or miss |
-| `ling-3.0-flash-free` | Ling 3.0 Flash | Solid |
+| `hy3-free` | HY3 (free) | Experimental |
 | `nemotron-3-ultra-free` | NVIDIA Nemotron 3 Ultra | Solid |
-| `north-mini-code-free` | North Mini Code | Solid |
+| `nemotron-3.5-lightning-free` | NVIDIA Nemotron 3.5 Lightning | Experimental |
 | `laguna-s-2.1-free` | Laguna S 2.1 | Hit or miss |
 
 All models support streaming, tool calls, and system messages.
