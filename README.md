@@ -312,21 +312,57 @@ x-opencode-request: msg_<unique_id>
 x-opencode-session: ses_<unique_id>
 ```
 
-## Standalone executables
+## Standalone executables（独立可执行文件）
 
-给不想安装 Node.js 的用户，GitHub Actions 会在推送 `v*.*.*` 标签时生成 GitHub Release 附件：
+给不想安装 Node.js 的用户，每个 Release 都会附带各平台的独立可执行文件：
 
-- Linux x64：`opencode-free-proxy-linux-x64`
-- Linux ARM64：`opencode-free-proxy-linux-arm64`
-- macOS x64：`opencode-free-proxy-macos-x64`
-- macOS Apple Silicon：`opencode-free-proxy-macos-arm64`
-- Windows x64：`opencode-free-proxy-win-x64.exe`
+| 平台 | 文件名 | 下载 |
+|------|--------|------|
+| Linux x64 | `opencode-free-proxy-linux-x64` | [Releases](https://github.com/xiaoxinkeji/opencode-free-proxy/releases/latest) |
+| Linux ARM64 | `opencode-free-proxy-linux-arm64` | [Releases](https://github.com/xiaoxinkeji/opencode-free-proxy/releases/latest) |
+| macOS x64 | `opencode-free-proxy-macos-x64` | [Releases](https://github.com/xiaoxinkeji/opencode-free-proxy/releases/latest) |
+| macOS Apple Silicon | `opencode-free-proxy-macos-arm64` | [Releases](https://github.com/xiaoxinkeji/opencode-free-proxy/releases/latest) |
+| Windows x64 | `opencode-free-proxy-win-x64.exe` | [Releases](https://github.com/xiaoxinkeji/opencode-free-proxy/releases/latest) |
 
-下载对应平台文件后直接运行即可。首次运行会在当前目录生成 `api-keys.json`；也可以通过 `KEYS_FILE` 指定密钥文件路径。发布标签示例：
+### 下载与运行
+
+**Linux / macOS：**
 
 ```bash
-git tag v1.0.0
-git push origin v1.0.0
+# 下载（以 Linux x64 为例）
+curl -L -o opencode-free-proxy https://github.com/xiaoxinkeji/opencode-free-proxy/releases/latest/download/opencode-free-proxy-linux-x64
+
+# 添加执行权限
+chmod +x opencode-free-proxy
+
+# 运行
+./opencode-free-proxy
+```
+
+**Windows：**
+
+```powershell
+# 下载（在 PowerShell 中执行）
+Invoke-WebRequest -Uri "https://github.com/xiaoxinkeji/opencode-free-proxy/releases/latest/download/opencode-free-proxy-win-x64.exe" -OutFile "opencode-free-proxy.exe"
+
+# 运行
+.\opencode-free-proxy.exe
+```
+
+### 首次运行
+
+- 首次运行会在**当前目录**自动生成 `api-keys.json`（包含 admin 和 user-default 两个密钥）
+- 也可以通过环境变量 `KEYS_FILE` 指定密钥文件路径
+- 默认监听端口 `6446`，可通过 `PROXY_PORT` 环境变量修改
+
+### 使用示例
+
+```bash
+# 启动后测试
+curl http://localhost:6446/v1/chat/completions \
+  -H "Authorization: Bearer $(cat api-keys.json | node -e 'let d="";process.stdin.on("data",c=>d+=c).on("end",()=>console.log(JSON.parse(d).admin))')" \
+  -H "Content-Type: application/json" \
+  -d '{"model": "big-pickle", "messages": [{"role": "user", "content": "Hello"}], "stream": true}'
 ```
 
 ## License
